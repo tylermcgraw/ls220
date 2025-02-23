@@ -16,7 +16,30 @@
 // For numbers = [1, 3, 5, 7] and target = 8, we get:
 // [[1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 3], [1, 1, 1, 5], [1, 1, 3, 3], [1, 7], [3, 5]]
 
+// Start with smallest number
+// If current sum adds to target, add to list, return
+// Check numbers equal to or bigger than current number
+
 function sumCombinations(candidates, target) {
+  let solutions = [];
+  let candidate = [];
+  function sumCombinationsHelper(num, sum) {
+    sum += num;
+    candidate.push(num);
+    if (sum === target) {
+      solutions.push([...candidate]);
+    } else if (sum < target) {
+      candidates.forEach(candidateNum => {
+        if (candidateNum >= num) {
+          sumCombinationsHelper(candidateNum, sum);
+        }
+      });
+    }
+    sum -= num;
+    candidate.pop(); 
+  }
+  candidates.forEach(num => sumCombinationsHelper(num, 0));
+  return solutions;
 }
 
 function combToString(comb) {
