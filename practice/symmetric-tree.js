@@ -22,14 +22,15 @@ function isSymmetric(root) {
   let queue = [root];
   while (queue.length > 0) {
     let nodes = [];
-    for (let idx = 0; idx < queue.length; idx += 1) {
+    let length = queue.length;
+    for (let idx = 0; idx < length; idx += 1) {
       let current = queue.shift();
       nodes.push(current);
       if (current.left) {
         queue.push(current.left);
       }
       if (current.right) {
-        queue.push(current.left);
+        queue.push(current.right);
       }
     }
     if (!isMirrored(nodes)) return false;
@@ -40,7 +41,7 @@ function isSymmetric(root) {
 function isMirrored(nodes) {
   let length = nodes.length;
   for (let idx = 0; idx < length / 2; idx += 1) {
-    if (nodes[0] !== nodes[length - 1]) return false;
+    if (nodes[idx] !== nodes[length - 1 - idx]) return false;
   }
   return true;
 }
